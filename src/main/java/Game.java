@@ -19,7 +19,7 @@ public class Game {
             screen.setCursorPosition(null);
             screen.startScreen();
             screen.doResizeIfNecessary();
-            hero = new Hero(10, 10);
+            hero = new Hero();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,16 +51,16 @@ public class Game {
                     running = false;
                     break;
                 case ArrowUp:
-                    hero.moveUp();
+                    moveHero(hero.moveUp());
                     break;
                 case ArrowDown:
-                    hero.moveDown();
+                    moveHero(hero.moveDown());
                     break;
                 case ArrowLeft:
-                    hero.moveLeft();
+                    moveHero(hero.moveLeft());
                     break;
                 case ArrowRight:
-                    hero.moveRight();
+                    moveHero(hero.moveRight());
             }
     }
 
@@ -69,4 +69,9 @@ public class Game {
         hero.draw(screen);
         screen.refresh();
     }
+
+    private void moveHero(Position position) {
+        hero.setPosition(position);
+    }
+
 }

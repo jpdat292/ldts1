@@ -2,48 +2,32 @@ import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.screen.Screen;
 
 public class Hero {
-    public Hero(int x, int y) {
-        this.y = y;
-        this.x = x;
+    public Hero() {}
+
+    private Position position = new Position(10, 10);
+
+    public Position moveUp() {
+        return new Position(position.getX(), position.getY() - 1);
     }
 
-    private int x;
-    private int y;
-
-    public int getX() {
-        return x;
+    public Position moveDown() {
+        return new Position(position.getX(), position.getY() + 1);
     }
 
-    public int getY() {
-        return y;
+    public Position moveRight() {
+        return new Position(position.getX() + 1, position.getY());
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void moveUp() {
-        y--;
-    }
-
-    public void moveDown() {
-        y++;
-    }
-
-    public void moveRight() {
-        x++;
-    }
-
-    public void moveLeft() {
-        x--;
+    public Position moveLeft() {
+        return new Position(position.getX() - 1, position.getY());
     }
 
     public void draw(Screen screen) {
-        screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+        screen.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('X')[0]);
+    }
+
+    protected void setPosition(Position position) {
+        this.position = position;
     }
 
 }
