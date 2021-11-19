@@ -24,26 +24,41 @@ public class Game {
         }
     }
     public Screen screen;
+    public boolean running;
     public void run() {
-        try {
-            this.draw();
-            KeyStroke key = screen.readInput();
-            processKey(key);
-        } catch (IOException e) {
-            e.printStackTrace();
+        running = true;
+        while (running) {
+            try {
+                this.draw();
+                KeyStroke key = screen.readInput();
+                processKey(key);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     private int x = 10;
     private int y = 10;
-    private void processKey(KeyStroke key) {
-        switch(key.getKeyType()) {
-            case ArrowUp:
-                // bla
-                break;
-            case ArrowDown:
-                // bla
-                break;
-        }
+    private void processKey(KeyStroke key) throws IOException{
+        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q')
+            screen.close();
+        else
+            switch(key.getKeyType()) {
+                case EOF:
+                    running = false;
+                    break;
+                case ArrowUp:
+                    y--;
+                    break;
+                case ArrowDown:
+                    y++;
+                    break;
+                case ArrowLeft:
+                    x--;
+                    break;
+                case ArrowRight:
+                    x++;
+            }
     }
     private void draw() throws IOException {
         screen.clear();
