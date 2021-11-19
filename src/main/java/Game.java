@@ -19,7 +19,7 @@ public class Game {
             screen.setCursorPosition(null);
             screen.startScreen();
             screen.doResizeIfNecessary();
-            hero = new Hero();
+            arena = new Arena(40, 20);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,7 +27,7 @@ public class Game {
 
     public Screen screen;
     public boolean running;
-    private Hero hero;
+    private Arena arena;
 
     public void run() {
         running = true;
@@ -46,32 +46,13 @@ public class Game {
         if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q')
             screen.close();
         else
-            switch(key.getKeyType()) {
-                case EOF:
-                    running = false;
-                    break;
-                case ArrowUp:
-                    moveHero(hero.moveUp());
-                    break;
-                case ArrowDown:
-                    moveHero(hero.moveDown());
-                    break;
-                case ArrowLeft:
-                    moveHero(hero.moveLeft());
-                    break;
-                case ArrowRight:
-                    moveHero(hero.moveRight());
-            }
+            running = arena.processKey(key);
     }
 
     private void draw() throws IOException {
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
-    }
-
-    private void moveHero(Position position) {
-        hero.setPosition(position);
     }
 
 }
